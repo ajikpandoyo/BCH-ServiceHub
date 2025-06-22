@@ -98,38 +98,39 @@
                     <li class="nav-item">
                         <a class="nav-link {{ Request::is('ruangan') ? 'active' : '' }}" href="{{ route('ruangan.index') }}">Ruangan</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            Pengajuan
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('peminjaman*') || Request::is('kerjasama*') || Request::is('kunjungan*') || Request::is('mediapartner*') ? 'active' : '' }}" href="#" id="pengajuanDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pengajuan
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('peminjaman.ruangan.create') }}">
+                            <li><a class="dropdown-item {{ Request::is('peminjaman*') ? 'active' : '' }}" href="{{ route('peminjaman.ruangan.create') }}">
                                 <i class="fas fa-door-open me-2"></i>Peminjaman Ruangan</a>
                             </li>
-                            <li><a class="dropdown-item" href="{{ route('kerjasama.event.index') }}">
+                            <li><a class="dropdown-item {{ Request::is('kerjasama*') ? 'active' : '' }}" href="{{ route('kerjasama.event.index') }}">
                                 <i class="fas fa-handshake me-2"></i>Kerja Sama Event</a>
                             </li>
-                            <li><a class="dropdown-item" href="{{ route('kunjungan.visit.create') }}">
+                            <li><a class="dropdown-item {{ Request::is('kunjungan*') ? 'active' : '' }}" href="{{ route('kunjungan.visit.create') }}">
                                 <i class="fas fa-building me-2"></i>Kunjungan Visit</a>
                             </li>
-                            <li><a class="dropdown-item" href="{{ route('mediapartner.create') }}">
+                            <li><a class="dropdown-item {{ Request::is('mediapartner*') ? 'active' : '' }}" href="{{ route('mediapartner.create') }}">
                                 <i class="fas fa-newspaper me-2"></i>Media Partner</a>
                             </li>
                         </ul>
                     </li>
-                    <li><a class="dropdown-item" href="{{ route('pendaftaran.event.index') }}">
-                                <i class="fas fa-newspaper me-2"></i>Pendaftaran Event</a>
-                            </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('pendaftaran*') ? 'active' : '' }}" href="{{ route('pendaftaran.event.index') }}">
+                            Pendaftaran Event
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link {{ Request::is('riwayat*') ? 'active' : '' }}" href="{{ route('riwayat.index') }}">
-                            <i class="fas fa-history me-1"></i>Riwayat
+                            Riwayat
                         </a>
                     </li>
                 </ul>
                 <div class="user-section d-flex align-items-center">
                     @auth
-                        <div class="dropdown">
-                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                        <div class="nav-item">
+                            <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
                                 <span>{{ Auth::user()->name }}</span>
                               
                             </a>

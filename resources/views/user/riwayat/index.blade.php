@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" style="margin-top: 50px;">
     {{-- Notifikasi --}}
     @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">

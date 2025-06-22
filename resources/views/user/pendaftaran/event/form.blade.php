@@ -1,16 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" style="margin-top: 100px;">
+<div class="kunjungan-header">
+    <div class="container">
+        <div class="text-center py-5">
+            <h1 class="fw-bold">Form Pendaftaran Event</h1>
+            <p class="text-muted">Silakan lengkapi formulir berikut untuk mendaftar ke event <strong>{{ $event->nama_event }}</strong></p>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Form Pendaftaran Event - {{ $event->nama_event }}</h5>
-                </div>
-
-                <div class="card-body">
-                    <div class="row mb-4">
+            <div class="card shadow-sm border-0 rounded-lg">
+                <div class="card-body p-5">
+                    <div class="row g-4 mb-4">
                         <div class="col-md-4">
                             @if($event->poster)
                                 <div class="event-poster-container">
@@ -27,7 +32,7 @@
                             @endif
                         </div>
                         <div class="col-md-8">
-                            <h6>Detail Event:</h6>
+                            <h6 class="fw-bold mb-3">Detail Event:</h6>
                             <p><i class="fas fa-calendar me-2"></i>{{ $event->tanggal_pelaksanaan }}</p>
                             <p><i class="fas fa-clock me-2"></i>{{ $event->waktu }}</p>
                             <p><i class="fas fa-map-marker-alt me-2"></i>{{ $event->lokasi_ruangan }}</p>
@@ -38,37 +43,48 @@
                     <form method="POST" action="{{ route('pendaftaran.event.store') }}" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="event_id" value="{{ $event->id }}">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Nama Peserta</label>
+                                    <input type="text" class="form-control" name="nama_peserta" required>
+                                </div>
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Nama Peserta</label>
-                            <input type="text" class="form-control" name="nama_peserta" required>
-                        </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email" required>
+                                </div>
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" name="email" required>
-                        </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Nomor Telepon</label>
+                                    <input type="text" class="form-control" name="no_telepon" required>
+                                </div>
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Nomor Telepon</label>
-                            <input type="text" class="form-control" name="no_telepon" required>
-                        </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Instansi</label>
+                                    <input type="text" class="form-control" name="instansi" required>
+                                </div>
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Instansi</label>
-                            <input type="text" class="form-control" name="instansi" required>
-                        </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label">Bukti Pembayaran</label>
+                                    <input type="file" class="form-control" name="bukti_pembayaran" accept="image/*" required>
+                                    <small class="text-muted">Format: JPG, PNG (Max. 2MB)</small>
+                                </div>
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Bukti Pembayaran</label>
-                            <input type="file" class="form-control" name="bukti_pembayaran" accept="image/*" required>
-                            <small class="text-muted">Format: JPG, PNG (Max. 2MB)</small>
-                        </div>
-
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-paper-plane me-2"></i>Kirim Pendaftaran
-                            </button>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-paper-plane me-2"></i>Kirim Pendaftaran
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -78,14 +94,11 @@
 </div>
 
 <style>
-.card {
-    border: none;
-    border-radius: 12px;
-}
-
-.card-header {
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+.kunjungan-header {
+    background: linear-gradient(135deg, #0041C2, #0052cc);
+    color: white;
+    padding: 2rem 0;
+    margin-top: 4rem;
 }
 
 .event-poster-container {
@@ -117,30 +130,37 @@
     margin-bottom: 0.5rem;
 }
 
+.form-label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
 .form-control {
-    border-radius: 6px;
-    border: 1px solid #d1d5db;
-    padding: 8px 12px;
+    padding: 0.75rem 1rem;
+    border-color: #e0e0e0;
+    border-radius: 8px;
 }
 
 .form-control:focus {
     border-color: #0041C2;
-    box-shadow: 0 0 0 0.2rem rgba(0, 65, 194, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(0,65,194,0.1);
+}
+
+.card {
+    border-radius: 15px;
 }
 
 .btn-primary {
-    background-color: #0041C2;
-    border: none;
-    padding: 10px;
-    border-radius: 6px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    background: #0041C2;
+    border-color: #0041C2;
 }
 
 .btn-primary:hover {
-    background-color: #003399;
-}
-
-.fas {
-    color: #0041C2;
+    background: #003399;
+    border-color: #003399;
 }
 </style>
 @endsection
