@@ -2,25 +2,50 @@
 
 @section('content')
 <div class="event-container">
+    {{-- Breadcrumb --}}
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Pendaftaran Event</li>
+        </ol>
+    </nav>
+
     <div class="event-header">
         <h1>Event yang tersedia</h1>
-        <p>Bandung Creative Hub menyelenggarakan berbagai event untuk para pelaku industri kreatif.<br>
-           Berupa workshop, seminar, pameran, dll.</p>
+        <p>
+            Bandung Creative Hub menyelenggarakan berbagai event untuk para pelaku industri kreatif.<br>
+            Berupa workshop, seminar, pameran, dll.
+        </p>
     </div>
 
-    <div class="search-section">
+    {{-- Search Section --}}
+    <form action="{{ route('pendaftaran.event.cari') }}" method="GET" class="search-section">
         <div class="search-box">
-            <input type="text" placeholder="Cari Event" class="search-input">
-            <button type="button" class="search-icon">
+            <input 
+                type="text" 
+                name="search" 
+                placeholder="Cari Event" 
+                class="search-input"
+                value="{{ request('search') }}"
+            >
+            <button type="submit" class="search-icon">
                 <i class="fas fa-search"></i>
             </button>
         </div>
-        <div class="date-filter">
-            <input type="date" class="date-input">
-        </div>
-        <button class="btn-cari-event">Cari Event</button>
-    </div>
 
+        <div class="date-filter">
+            <input 
+                type="date" 
+                name="tanggal" 
+                class="date-input"
+                value="{{ request('tanggal') }}"
+            >
+        </div>
+
+        <button type="submit" class="btn-cari-event">Cari Event</button>
+    </form>
+
+    {{-- Event Grid --}}
     <div class="event-grid">
         @forelse($events as $event)
         <div class="event-card">
@@ -40,7 +65,11 @@
         @empty
         <div class="empty-state">
             <i class="fas fa-calendar-times"></i>
-            <p>Tidak ada event yang tersedia saat ini</p>
+            @if(request('search') || request('tanggal'))
+                <p>Tidak ada event yang cocok dengan pencarian Anda.</p>
+            @else
+                <p>Tidak ada event yang tersedia saat ini</p>
+            @endif
         </div>
         @endforelse
     </div>
@@ -54,6 +83,43 @@
     margin: 0 auto;
 }
 
+/* Breadcrumb */
+.breadcrumb-nav {
+    margin-bottom: 20px;
+}
+
+.breadcrumb {
+    background: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    color: #6b7280;
+    margin: 0 8px;
+}
+
+.breadcrumb-item a {
+    text-decoration: none;
+    color: #2563eb;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.breadcrumb-item a:hover {
+    color: #1d4ed8;
+}
+
+.breadcrumb-item.active {
+    color: #6b7280;
+    font-weight: 500;
+}
+
+/* Header */
 .event-header {
     text-align: center;
     margin-bottom: 40px;
@@ -70,11 +136,13 @@
     line-height: 1.6;
 }
 
+/* Search Section */
 .search-section {
     display: flex;
     gap: 16px;
     margin-bottom: 40px;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .search-box {
@@ -123,6 +191,7 @@
     background: #1d4ed8;
 }
 
+/* Event Grid */
 .event-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

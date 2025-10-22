@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="event-actions">
-                        <a href="{{ route('pendaftaran.event.register', $event->id) }}" class="btn btn-primary btn-lg">
+                        <a href="{{ route('pendaftaran.event.form', $event->id) }}" class="btn btn-primary btn-lg">
                             <i class="fas fa-user-plus me-2"></i>Daftar Event
                         </a>
                         <a href="{{ route('pendaftaran.event.index') }}" class="btn btn-outline-secondary">

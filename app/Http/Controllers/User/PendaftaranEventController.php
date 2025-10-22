@@ -21,10 +21,33 @@ class PendaftaranEventController extends Controller
         return view('user.pendaftaran.event.index', compact('events'));
     }
 
+    public function cari(Request $request)
+    {
+        $query = Event::where('status', 'akan_datang');
+
+        if ($request->filled('search')) {
+            $query->where('nama_event', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('tanggal')) {
+            $query->whereDate('tanggal_pelaksanaan', $request->tanggal);
+        }
+
+        $events = $query->orderBy('tanggal_pelaksanaan', 'asc')->paginate(9);
+
+        return view('user.pendaftaran.event.index', compact('events'));
+    }
+
     public function form($id)
     {
         $event = Event::findOrFail($id);
         return view('user.pendaftaran.event.form', compact('event'));
+    }
+
+    public function show($id)
+    {
+        $event = Event::findOrFail($id);
+        return view('user.pendaftaran.event.show', compact('event'));
     }
 
     public function store(Request $request)

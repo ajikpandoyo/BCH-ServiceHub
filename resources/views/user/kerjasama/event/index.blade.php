@@ -1,127 +1,178 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5 py-5">
-    <div class="row mb-4">
-        <div class="col-12">
-            <h2 class="fw-bold">Daftar Event</h2>
-            <p class="text-muted">Temukan event menarik untuk kerjasama</p>
-        </div>
+<div class="container ruangan-index">
+    {{-- Breadcrumb --}}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Event</li>
+        </ol>
+    </nav>
+
+    {{-- Header --}}
+    <div class="ruangan-header">
+        <h1>Daftar Event</h1>
+        <p>
+            Temukan berbagai event menarik di Bandung Creative Hub.<br>
+            Bergabunglah dalam kegiatan kolaboratif dan inspiratif bersama komunitas kreatif.
+        </p>
     </div>
 
-    <div class="row">
+    {{-- Search --}}
+    <form action="{{ route('kerjasama.event.index') }}" method="GET" class="d-flex justify-content-center align-items-center gap-3 mb-5">
+        <div class="position-relative" style="max-width: 400px; width: 100%;">
+            <input type="text" name="search" class="form-control search-input" placeholder="Cari Event..." value="{{ request('search') }}">
+            <button type="submit" class="btn position-absolute top-50 end-0 translate-middle-y text-secondary border-0 bg-transparent pe-3">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <button type="submit" class="btn btn-primary px-4">Cari Event</button>
+    </form>
+
+    {{-- Grid Event --}}
+    <div class="row g-4">
         @forelse($events as $event)
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="event-poster-container">
-                        @if($event->poster)
-                            <img src="{{ $event->poster_url }}" 
-                                 class="card-img-top" 
-                                 alt="{{ $event->nama_event }}"
-                                 onerror="this.onerror=null; this.src='{{ asset('images/default-event.jpg') }}';">
-                        @else
-                            <div class="no-poster">
-                                <i class="fas fa-image"></i>
-                                <span>Tidak ada poster</span>
-                            </div>
-                        @endif
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                @if($event->poster)
+                    <img src="{{ $event->poster_url }}" class="card-img-top" alt="{{ $event->nama_event }}" style="height: 200px; object-fit: cover;" onerror="this.onerror=null; this.src='{{ asset('images/default-event.jpg') }}';">
+                @else
+                    <div class="d-flex flex-column justify-content-center align-items-center text-muted" style="height: 200px; background-color: #f8f9fa;">
+                        <i class="fas fa-image fa-2x mb-2"></i>
+                        <small>Tidak ada poster</small>
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $event->nama_event }}</h5>
-                        <p class="card-text text-muted">
-                            <small>
-                                <i class="fas fa-calendar me-2"></i>{{ $event->tanggal_pelaksanaan }}<br>
-                                <i class="fas fa-clock me-2"></i>{{ $event->waktu }}<br>
-                                <i class="fas fa-map-marker-alt me-2"></i>{{ $event->lokasi_ruangan }}
-                            </small>
-                        </p>
-                        <p class="card-text">{{ Str::limit($event->deskripsi, 100) }}</p>
+                @endif
+
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-semibold mb-2">{{ $event->nama_event }}</h5>
+                    <p class="card-text text-muted flex-grow-1">{{ Str::limit($event->deskripsi, 100) }}</p>
+
+                    <div class="mb-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-calendar text-primary me-2"></i>
+                            <span>{{ $event->tanggal_pelaksanaan }}</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-clock text-primary me-2"></i>
+                            <span>{{ $event->waktu }}</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                            <span>{{ $event->lokasi_ruangan }}</span>
+                        </div>
                     </div>
-                    <div class="card-footer bg-white">
-                        <a href="{{ route('kerjasama.event.show', $event->id) }}" class="btn btn-primary w-100">
-                            <i class="fas fa-info-circle me-2"></i>Detail Event
-                        </a>
-                    </div>
+
+                    <a href="{{ route('kerjasama.event.show', $event->id) }}" class="btn btn-primary mt-auto">Lihat Detail</a>
                 </div>
             </div>
+        </div>
         @empty
-            <div class="col-12">
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i>Tidak ada event yang tersedia saat ini.
-                </div>
-            </div>
+        <div class="text-center py-5 text-muted">
+            <i class="fas fa-calendar-times fa-3x mb-3"></i>
+            @if(request('search'))
+                <p>Tidak ada event dengan nama "{{ request('search') }}"</p>
+            @else
+                <p>Tidak ada event yang tersedia saat ini</p>
+            @endif
+        </div>
         @endforelse
     </div>
 
-    <div class="row mt-4">
-        <div class="col-12">
+    {{-- Pagination --}}
+    <div class="row mt-5">
+        <div class="col-12 d-flex justify-content-center">
             {{ $events->links() }}
         </div>
     </div>
 </div>
 
 <style>
-.card {
-    border: none;
-    border-radius: 12px;
-    transition: transform 0.2s;
+/* ======== Struktur & Padding ======== */
+.container.ruangan-index {
+    margin-top: 100px !important;
+    margin-bottom: 80px;
+    max-width: 1200px;
 }
 
-.card:hover {
-    transform: translateY(-5px);
+/* ======== Breadcrumb ======== */
+.breadcrumb {
+    margin-bottom: 2rem;
+    background-color: transparent;
+    padding: 0;
 }
 
-.event-poster-container {
-    height: 200px;
-    overflow: hidden;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    background-color: #f8f9fa;
+.breadcrumb a {
+    color: #0041C2;
+    text-decoration: none;
+    font-weight: 500;
 }
 
-.event-poster-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.breadcrumb a:hover {
+    text-decoration: underline;
 }
 
-.no-poster {
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #f8f9fa;
-    color: #6b7280;
+/* ======== Header ======== */
+.ruangan-header {
+    text-align: center;
+    margin-bottom: 40px;
 }
 
-.no-poster i {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+.ruangan-header h1 {
+    font-size: 32px;
+    color: #1a1a1a;
+    margin-bottom: 16px;
 }
 
-.card-title {
-    font-size: 1.1rem;
-    font-weight: 600;
+.ruangan-header p {
+    color: #666;
+    line-height: 1.6;
 }
 
-.card-text {
-    font-size: 0.9rem;
+/* ======== Search Section ======== */
+.search-input {
+    border-radius: 8px;
+    height: 44px;
+    padding-right: 40px;
 }
 
+/* ======== Button Style ======== */
 .btn-primary {
     background-color: #0041C2;
     border: none;
-    padding: 8px;
     border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
 .btn-primary:hover {
     background-color: #003399;
 }
 
-.fas {
-    color: #0041C2;
+/* ======== Card Style ======== */
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.card-title {
+    color: #1a1a1a;
+}
+
+.card-text {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ======== Icon ======== */
+.text-primary {
+    color: #0041C2 !important;
 }
 </style>
 @endsection

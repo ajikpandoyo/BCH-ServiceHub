@@ -230,38 +230,18 @@ Route::prefix('mediapartner')->name('mediapartner.')->group(function () {
     Route::post('/', [MediaPartnerController::class, 'store'])->name('store');
 });
 
-// Admin Event Registration Routes
-// Admin Event Registration Routes
-Route::prefix('admin/pendaftaran/event')->name('admin.pendaftaran.event.')->group(function () {
-    Route::get('/', [App\Http\Controllers\Admin\PendaftaranEventController::class, 'index'])->name('index');
-    Route::get('/{id}', [App\Http\Controllers\Admin\PendaftaranEventController::class, 'show'])->name('show');
-    Route::put('/{id}', [App\Http\Controllers\Admin\PendaftaranEventController::class, 'update'])->name('update');
-    Route::get('/export', [App\Http\Controllers\Admin\PendaftaranEventController::class, 'export'])->name('export');
-});
-
 // User Event Registration Routes
 Route::prefix('pendaftaran/event')->name('pendaftaran.event.')->middleware(['auth'])->group(function () {
     Route::get('/', [PendaftaranEventController::class, 'index'])->name('index');
-    Route::get('/all', [PendaftaranEventController::class, 'all'])->name('all');
+    Route::get('/cari', [PendaftaranEventController::class, 'cari'])->name('cari');
     Route::get('/{id}', [PendaftaranEventController::class, 'show'])->name('show');
     Route::get('/{id}/form', [PendaftaranEventController::class, 'form'])->name('form');
     Route::post('/store', [PendaftaranEventController::class, 'store'])->name('store');
 });
-    Route::get('/all', [PendaftaranEventController::class, 'all'])->name('all');
-    Route::get('/{id}', [PendaftaranEventController::class, 'show'])->name('show');
-    Route::get('/{id}/form', [PendaftaranEventController::class, 'form'])->name('form');
-    Route::post('/store', [PendaftaranEventController::class, 'store'])->name('store');
 
-
+    
 Route::get('/admin/kelola/event/{event}/edit', [KelolaEventController::class, 'edit'])->name('admin.kelola.event.edit');
 Route::delete('/admin/kelola/event/{event}', [KelolaEventController::class, 'destroy'])->name('admin.kelola.event.destroy');
-
-// Event Registration Routes
-Route::prefix('pendaftaran')->name('pendaftaran.')->group(function () {
-    Route::get('/event', [PendaftaranEventController::class, 'index'])->name('event.index');
-    Route::get('/event/{id}/form', [PendaftaranEventController::class, 'form'])->name('event.form');
-    Route::post('/event/store', [PendaftaranEventController::class, 'store'])->name('event.store');
-});
 
 // Route untuk user
 Route::prefix('peminjaman/ruangan')->name('peminjaman.ruangan.')->group(function () {
@@ -279,4 +259,3 @@ Route::prefix('admin/verifikasi/peminjaman')->name('admin.verifikasi.peminjaman.
     Route::post('/{id}/approve', [VerifikasiPeminjamanController::class, 'approve'])->name('approve');
     Route::post('/{id}/reject', [VerifikasiPeminjamanController::class, 'reject'])->name('reject');
 });
-

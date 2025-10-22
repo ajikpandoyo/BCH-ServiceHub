@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5 pt-4">
+<div class="container ruangan-detail">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
             <li class="breadcrumb-item"><a href="{{ route('ruangan.index') }}">Ruangan</a></li>
-            <li class="breadcrumb-item active">{{ $ruangan->nama_ruangan }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $ruangan->nama_ruangan }}</li>
         </ol>
     </nav>
+
 
     <div class="card shadow-sm">
         <div class="row g-0">
@@ -17,7 +19,7 @@
             <div class="col-md-6">
                 <div class="card-body p-4">
                     <h2 class="card-title mb-4">{{ $ruangan->nama_ruangan }}</h2>
-                    
+
                     <div class="info-section mb-4">
                         <div class="d-flex align-items-center mb-3">
                             <i class="fas fa-map-marker-alt fa-fw me-3"></i>
@@ -54,42 +56,52 @@
 </div>
 
 <style>
-.breadcrumb {
-    margin-bottom: 2rem;
-}
+    .container.ruangan-detail {
+        margin-top: 100px !important;
+    }
 
-.breadcrumb a {
-    color: #0041C2;
-    text-decoration: none;
-}
+    .breadcrumb {
+        margin-bottom: 2rem;
+        background-color: transparent;
+        padding: 0;
+    }
 
-.card {
-    border: none;
-    border-radius: 12px;
-    overflow: hidden;
-}
+    .breadcrumb a {
+        color: #0041C2;
+        text-decoration: none;
+    }
 
-.info-section i {
-    color: #0041C2;
-    width: 20px;
-}
+    .breadcrumb a:hover {
+        text-decoration: underline;
+    }
 
-.badge {
-    padding: 8px 16px;
-    font-weight: 500;
-    border-radius: 20px;
-}
+    .card {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+    }
 
-.btn-primary {
-    background-color: #0041C2;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 6px;
-    font-weight: 500;
-}
+    .info-section i {
+        color: #0041C2;
+        width: 20px;
+    }
 
-.btn-primary:hover {
-    background-color: #003399;
-}
+    .badge {
+        padding: 8px 16px;
+        font-weight: 500;
+        border-radius: 20px;
+    }
+
+    .btn-primary {
+        background-color: #0041C2;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-weight: 500;
+    }
+
+    .btn-primary:hover {
+        background-color: #003399;
+    }
 </style>
 @endsection
