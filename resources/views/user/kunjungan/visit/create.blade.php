@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5 pt-5">
+<div class="container kunjungan-visit-index">
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
@@ -21,7 +21,7 @@
 
     <!-- Form Section -->
     <div class="row justify-content-center">
-        <div class="col-lg-10">
+        <div class="col-lg-20">
             <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
                 <div class="card-body p-5">
                     @if(session('success'))
@@ -135,10 +135,35 @@
 </div>
 
 <style>
+    /* ======== Struktur & Padding ======== */
+.container.kunjungan-visit-index {
+    margin-top: 100px !important;
+    margin-bottom: 80px;
+    max-width: 1200px;
+}
+
+/* ======== Breadcrumb ======== */
+.breadcrumb {
+    margin-bottom: 2rem;
+    background-color: transparent;
+    padding: 0;
+}
+
+.breadcrumb a {
+    color: #0041C2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* ======== Header ======== */
 .ruangan-header {
     text-align: center;
     margin-bottom: 40px;
-    margin-top: 20px;
+    margin-top: 0px;
 }
 
 .ruangan-header h1 {
@@ -152,17 +177,6 @@
     line-height: 1.6;
 }
 
-.breadcrumb {
-    background: transparent;
-    padding: 0;
-}
-.breadcrumb a {
-    color: #0041C2;
-    text-decoration: none;
-}
-.breadcrumb a:hover {
-    text-decoration: underline;
-}
 .card {
     border-radius: 16px;
     transition: all 0.3s ease;

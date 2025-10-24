@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5 pt-5">
+<div class="container mediapartner-index">
     <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="mb-4">
+    <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
             <li class="breadcrumb-item"><a href="#">Pengajuan</a></li>
@@ -22,7 +22,7 @@
 
     <!-- Form Section -->
     <div class="row justify-content-center">
-        <div class="col-lg-10">
+        <div class="col-lg-20">
             <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
                 <div class="card-body p-5">
                     @if(session('success'))
@@ -129,6 +129,31 @@
 </div>
 
 <style>
+/* ======== Struktur & Padding ======== */
+.container.mediapartner-index {
+    margin-top: 100px !important;
+    margin-bottom: 80px;
+    max-width: 1200px;
+}
+
+/* ======== Breadcrumb ======== */
+.breadcrumb {
+    margin-bottom: 2rem;
+    background-color: transparent;
+    padding: 0;
+}
+
+.breadcrumb a {
+    color: #0041C2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* ======== Header ======== */
 .ruangan-header {
     text-align: center;
     margin-bottom: 40px;
@@ -143,17 +168,7 @@
     color: #666;
     line-height: 1.6;
 }
-.breadcrumb {
-    background: transparent;
-    padding: 0;
-}
-.breadcrumb a {
-    color: #0041C2;
-    text-decoration: none;
-}
-.breadcrumb a:hover {
-    text-decoration: underline;
-}
+
 .card {
     border-radius: 16px;
     transition: all 0.3s ease;

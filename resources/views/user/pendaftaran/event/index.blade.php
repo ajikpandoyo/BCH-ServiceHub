@@ -1,15 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="event-container">
+<div class="container pendaftaran-event-index mt-5 pt-5">
     {{-- Breadcrumb --}}
-    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">Pendaftaran Event</li>
         </ol>
     </nav>
 
+    {{-- Header --}}
     <div class="event-header">
         <h1>Event yang tersedia</h1>
         <p>
@@ -19,52 +20,59 @@
     </div>
 
     {{-- Search Section --}}
-    <form action="{{ route('pendaftaran.event.cari') }}" method="GET" class="search-section">
-        <div class="search-box">
+    <form action="{{ route('pendaftaran.event.cari') }}" method="GET" class="d-flex justify-content-center align-items-center gap-3 mb-5 flex-wrap">
+        <div class="position-relative" style="max-width: 400px; width: 100%;">
             <input 
                 type="text" 
                 name="search" 
-                placeholder="Cari Event" 
-                class="search-input"
+                class="form-control search-input" 
+                placeholder="Cari Event..." 
                 value="{{ request('search') }}"
             >
-            <button type="submit" class="search-icon">
+            <button type="submit" class="btn position-absolute top-50 end-0 translate-middle-y text-secondary border-0 bg-transparent pe-3">
                 <i class="fas fa-search"></i>
             </button>
         </div>
 
-        <div class="date-filter">
-            <input 
-                type="date" 
-                name="tanggal" 
-                class="date-input"
-                value="{{ request('tanggal') }}"
-            >
-        </div>
+        <input 
+            type="date" 
+            name="tanggal" 
+            class="form-control date-input"
+            value="{{ request('tanggal') }}"
+            style="max-width: 200px;"
+        >
 
-        <button type="submit" class="btn-cari-event">Cari Event</button>
+        <button type="submit" class="btn btn-primary px-4">Cari Event</button>
     </form>
 
     {{-- Event Grid --}}
-    <div class="event-grid">
+    <div class="row g-4">
         @forelse($events as $event)
-        <div class="event-card">
-            <img src="{{ Storage::url($event->gambar) }}" alt="{{ $event->nama_event }}" class="event-image">
-            <div class="event-content">
-                <h3>{{ $event->nama_event }}</h3>
-                <p>{{ Str::limit($event->deskripsi, 100) }}</p>
-                <div class="event-info">
-                    <span><i class="fas fa-users"></i> {{ $event->kuota }} orang</span>
-                    <span><i class="fas fa-calendar"></i> {{ $event->tanggal_pelaksanaan }}</span>
-                </div>
-                <div class="event-actions">
-                    <a href="{{ route('pendaftaran.event.form', $event->id) }}" class="btn-daftar">Daftar</a>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <img src="{{ Storage::url($event->gambar) }}" class="card-img-top" alt="{{ $event->nama_event }}" style="height: 200px; object-fit: cover;">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-semibold mb-2">{{ $event->nama_event }}</h5>
+                    <p class="card-text text-muted flex-grow-1">{{ Str::limit($event->deskripsi, 100) }}</p>
+
+                    <div class="mb-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-users text-primary me-2"></i>
+                            <span>{{ $event->kuota }} orang</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-calendar text-primary me-2"></i>
+                            <span>{{ $event->tanggal_pelaksanaan }}</span>
+                        </div>
+                    </div>
+
+                    <a href="{{ route('pendaftaran.event.form', $event->id) }}" class="btn btn-primary mt-auto">Daftar</a>
                 </div>
             </div>
         </div>
         @empty
-        <div class="empty-state">
-            <i class="fas fa-calendar-times"></i>
+        <div class="text-center py-5 text-muted">
+            <i class="fas fa-calendar-times fa-3x mb-3"></i>
             @if(request('search') || request('tanggal'))
                 <p>Tidak ada event yang cocok dengan pencarian Anda.</p>
             @else
@@ -75,51 +83,31 @@
     </div>
 </div>
 
-@push('styles')
 <style>
-.event-container {
-    padding: 100px;
+/* ======== Struktur & Padding ======== */
+.container.pendaftaran-event-index {
+    margin-bottom: 80px;
     max-width: 1200px;
-    margin: 0 auto;
 }
 
-/* Breadcrumb */
-.breadcrumb-nav {
-    margin-bottom: 20px;
-}
-
+/* ======== Breadcrumb ======== */
 .breadcrumb {
-    background: none;
+    margin-bottom: 2rem;
+    background-color: transparent;
     padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    list-style: none;
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
-    content: "›";
-    color: #6b7280;
-    margin: 0 8px;
-}
-
-.breadcrumb-item a {
+.breadcrumb a {
+    color: #0041C2;
     text-decoration: none;
-    color: #2563eb;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-
-.breadcrumb-item a:hover {
-    color: #1d4ed8;
-}
-
-.breadcrumb-item.active {
-    color: #6b7280;
     font-weight: 500;
 }
 
-/* Header */
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* ======== Header ======== */
 .event-header {
     text-align: center;
     margin-bottom: 40px;
@@ -136,150 +124,55 @@
     line-height: 1.6;
 }
 
-/* Search Section */
-.search-section {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 40px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.search-box {
-    position: relative;
-    flex: 1;
-    max-width: 400px;
-}
-
+/* ======== Search Section ======== */
 .search-input {
-    width: 100%;
-    padding: 12px 40px 12px 16px;
-    border: 1px solid #e2e8f0;
     border-radius: 8px;
-    font-size: 14px;
-}
-
-.search-icon {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: #64748b;
+    height: 44px;
+    padding-right: 40px;
 }
 
 .date-input {
-    padding: 12px 16px;
-    border: 1px solid #e2e8f0;
     border-radius: 8px;
-    font-size: 14px;
+    height: 44px;
 }
 
-.btn-cari-event {
-    background: #2563eb;
-    color: white;
-    padding: 12px 24px;
+/* ======== Button Style ======== */
+.btn-primary {
+    background-color: #0041C2;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.2s ease;
 }
 
-.btn-cari-event:hover {
-    background: #1d4ed8;
+.btn-primary:hover {
+    background-color: #003399;
 }
 
-/* Event Grid */
-.event-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 24px;
-}
-
-.event-card {
-    background: white;
+/* ======== Card Style ======== */
+.card {
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.event-card:hover {
-    transform: translateY(-4px);
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
 }
 
-.event-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.event-content {
-    padding: 20px;
-}
-
-.event-content h3 {
-    font-size: 18px;
+.card-title {
     color: #1a1a1a;
-    margin-bottom: 12px;
 }
 
-.event-content p {
-    color: #666;
+.card-text {
     font-size: 14px;
-    margin-bottom: 16px;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
-.event-info {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 16px;
-    font-size: 14px;
-    color: #64748b;
-}
-
-.event-info i {
-    margin-right: 6px;
-}
-
-.event-actions {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.btn-daftar {
-    background: #2563eb;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background 0.2s;
-}
-
-.btn-daftar:hover {
-    background: #1d4ed8;
-}
-
-.empty-state {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 60px 20px;
-    color: #94a3b8;
-}
-
-.empty-state i {
-    font-size: 48px;
-    margin-bottom: 16px;
-}
-
-.empty-state p {
-    font-size: 16px;
+/* ======== Icon ======== */
+.text-primary {
+    color: #0041C2 !important;
 }
 </style>
-@endpush
 @endsection

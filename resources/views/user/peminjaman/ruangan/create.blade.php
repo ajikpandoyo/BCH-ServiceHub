@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5 pt-5">
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="mb-4">
+<div class="container peminjaman-ruangan-index">
+    {{-- Breadcrumb --}}
+    <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
             <li class="breadcrumb-item"><a href="{{ route('peminjaman.ruangan.index') }}">Pengajuan</a></li>
@@ -22,9 +22,10 @@
 
     <!-- Form Section -->
     <div class="row justify-content-center">
-        <div class="col-lg-10">
+        <div class="col-lg-20">
             <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
                 <div class="card-body p-5">
+
                     @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
                         <i class="fas fa-check-circle me-2"></i>
@@ -35,7 +36,8 @@
 
                     <form action="{{ route('peminjaman.ruangan.store') }}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                         @csrf
-
+                        
+                        {{-- Form fields (tidak diubah) --}}
                         <!-- Informasi Peminjam -->
                         <h4 class="fw-bold mb-4 text-primary">Informasi Peminjam</h4>
                         <div class="row g-4">
@@ -163,6 +165,7 @@
                             </button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -170,107 +173,107 @@
 </div>
 
 <style>
-    .ruangan-header {
-        text-align: center;
-        margin-bottom: 40px;
-        margin-top: 20px;
-    }
+/* ======== Struktur & Padding ======== */
+.container.peminjaman-ruangan-index {
+    margin-top: 100px !important;
+    margin-bottom: 80px;
+    max-width: 1200px;
+}
 
-    .ruangan-header h1 {
-        font-size: 32px;
-        color: #1a1a1a;
-        margin-bottom: 16px;
-    }
+/* ======== Breadcrumb ======== */
+.breadcrumb {
+    margin-bottom: 2rem;
+    background-color: transparent;
+    padding: 0;
+}
 
-    .ruangan-header p {
-        color: #666;
-        line-height: 1.6;
-    }
+.breadcrumb a {
+    color: #0041C2;
+    text-decoration: none;
+    font-weight: 500;
+}
 
-    .breadcrumb {
-        background: transparent;
-        padding: 0;
-    }
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
 
-    .breadcrumb a {
-        color: #0041C2;
-        text-decoration: none;
-    }
+/* ======== Header ======== */
+.ruangan-header {
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 0;
+}
 
-    .breadcrumb a:hover {
-        text-decoration: underline;
-    }
+.ruangan-header h1 {
+    font-size: 32px;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+}
 
-    .card {
-        border-radius: 16px;
-        transition: all 0.3s ease;
-    }
+.ruangan-header p {
+    color: #666;
+    line-height: 1.6;
+}
 
-    .card:hover {
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-    }
-
-    .form-label {
-        font-weight: 600;
-        color: #333;
-    }
-
-    .form-control,
-    .form-select {
-        padding: 0.75rem 1rem;
-        border-radius: 10px;
-        border: 1px solid #e0e0e0;
-        transition: all 0.2s ease;
-    }
-
-    .form-control:focus,
-    .form-select:focus {
-        border-color: #0041C2;
-        box-shadow: 0 0 0 0.25rem rgba(0, 65, 194, 0.15);
-    }
-
-    .btn-primary {
-        background-color: #0041C2;
-        border: none;
-        transition: all 0.2s ease;
-    }
-
-    .btn-primary:hover {
-        background-color: #003399;
-        transform: translateY(-1px);
-    }
-
-    .btn-outline-secondary {
-        border: 1px solid #ccc;
-        transition: all 0.2s ease;
-    }
-
-    .btn-outline-secondary:hover {
-        background-color: #f1f1f1;
-    }
-
-    h4.text-primary {
-        color: #0041C2 !important;
-        border-left: 4px solid #0041C2;
-        padding-left: 12px;
-    }
+.card {
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+.card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+}
+.form-label {
+    font-weight: 600;
+    color: #333;
+}
+.form-control, .form-select {
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.2s ease;
+}
+.form-control:focus, .form-select:focus {
+    border-color: #0041C2;
+    box-shadow: 0 0 0 0.25rem rgba(0,65,194,0.15);
+}
+.btn-primary {
+    background-color: #0041C2;
+    border: none;
+    transition: all 0.2s ease;
+}
+.btn-primary:hover {
+    background-color: #003399;
+    transform: translateY(-1px);
+}
+.btn-outline-secondary {
+    border: 1px solid #ccc;
+    transition: all 0.2s ease;
+}
+.btn-outline-secondary:hover {
+    background-color: #f1f1f1;
+}
+h4.text-primary {
+    color: #0041C2 !important;
+    border-left: 4px solid #0041C2;
+    padding-left: 12px;
+}
 </style>
 
 @push('scripts')
 <script>
-    (function() {
-        'use strict'
-        var forms = document.querySelectorAll('.needs-validation')
-        Array.prototype.slice.call(forms).forEach(function(form) {
-            form.addEventListener('submit', function(event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-                form.classList.add('was-validated')
-            }, false)
-        })
-    })()
+(function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
 </script>
 @endpush
 @endsection

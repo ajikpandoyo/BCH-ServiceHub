@@ -1,10 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-5">
-    <div class="row">
+<div class="container event-detail py-5">
+    {{-- Breadcrumb --}}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('kerjasama.event.index') }}">Event</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $event->nama_event }}</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        {{-- Kolom Kiri: Detail Event --}}
         <div class="col-md-8">
-            <div class="card shadow-sm mb-4">
+            <div class="card border-0 shadow-sm">
                 <div class="event-poster-container">
                     @if($event->poster)
                         <img src="{{ $event->poster_url }}" 
@@ -13,77 +23,76 @@
                              onerror="this.onerror=null; this.src='{{ asset('images/default-event.jpg') }}';">
                     @else
                         <div class="no-poster">
-                            <i class="fas fa-image"></i>
-                            <span>Tidak ada poster</span>
+                            <i class="fas fa-image fa-3x mb-2 text-muted"></i>
+                            <span class="text-muted">Tidak ada poster</span>
                         </div>
                     @endif
                 </div>
-                <div class="card-body">
-                    <h1 class="card-title mb-4">{{ $event->nama_event }}</h1>
+
+                <div class="card-body p-4">
+                    <h1 class="card-title fw-semibold mb-4">{{ $event->nama_event }}</h1>
                     
-                    <div class="event-info mb-4">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="info-item">
-                                    <i class="fas fa-calendar me-2"></i>
-                                    <span>Tanggal Pelaksanaan</span>
-                                    <p class="mb-0">{{ $event->tanggal_pelaksanaan }}</p>
-                                </div>
+                    {{-- Informasi Event --}}
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <i class="fas fa-calendar me-2 text-primary"></i>
+                                <span class="text-secondary small d-block">Tanggal Pelaksanaan</span>
+                                <p class="mb-0 fw-medium">{{ $event->tanggal_pelaksanaan }}</p>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="info-item">
-                                    <i class="fas fa-clock me-2"></i>
-                                    <span>Waktu</span>
-                                    <p class="mb-0">{{ $event->waktu }}</p>
-                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <i class="fas fa-clock me-2 text-primary"></i>
+                                <span class="text-secondary small d-block">Waktu</span>
+                                <p class="mb-0 fw-medium">{{ $event->waktu }}</p>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="info-item">
-                                    <i class="fas fa-map-marker-alt me-2"></i>
-                                    <span>Lokasi</span>
-                                    <p class="mb-0">{{ $event->lokasi_ruangan }}</p>
-                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                                <span class="text-secondary small d-block">Lokasi</span>
+                                <p class="mb-0 fw-medium">{{ $event->lokasi_ruangan }}</p>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="info-item">
-                                    <i class="fas fa-users me-2"></i>
-                                    <span>Kapasitas</span>
-                                    <p class="mb-0">{{ $event->kapasitas }} orang</p>
-                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <i class="fas fa-users me-2 text-primary"></i>
+                                <span class="text-secondary small d-block">Kapasitas</span>
+                                <p class="mb-0 fw-medium">{{ $event->kapasitas }} orang</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="event-description mb-4">
-                        <h5 class="mb-3">Deskripsi Event</h5>
-                        <p class="text-muted">{{ $event->deskripsi }}</p>
+                    {{-- Deskripsi Event --}}
+                    <div class="mb-4">
+                        <h5 class="fw-semibold mb-2">Deskripsi Event</h5>
+                        <p class="text-muted mb-0">{{ $event->deskripsi }}</p>
                     </div>
 
-                    <div class="event-requirements mb-4">
-                        <h5 class="mb-3">Persyaratan</h5>
-                        <p class="text-muted">{{ $event->persyaratan }}</p>
+                    {{-- Persyaratan --}}
+                    <div class="mb-4">
+                        <h5 class="fw-semibold mb-2">Persyaratan</h5>
+                        <p class="text-muted mb-0">{{ $event->persyaratan }}</p>
                     </div>
                 </div>
             </div>
         </div>
 
+        {{-- Kolom Kanan: Informasi Pendaftaran --}}
         <div class="col-md-4">
-            <div class="card shadow-sm sticky-top" style="top: 20px;">
-                <div class="card-body">
-                    <h5 class="card-title mb-4">Informasi Pendaftaran</h5>
-                    
-                    <div class="d-grid gap-2">
-                        <a href="{{ route('peminjaman.event.form', $event->id) }}" class="btn btn-primary w-100">
-                            <i class="fas fa-pencil-alt me-2"></i>Daftar Event
+            <div class="card border-0 shadow-sm sticky-top" style="top: 100px;">
+                <div class="card-body p-4">
+                    <h5 class="fw-semibold mb-4">Informasi Pendaftaran</h5>
+
+                    <div class="d-grid gap-3">
+                        <a href="{{ route('peminjaman.event.form', $event->id) }}" class="btn btn-primary">
+                            <i class="fas fa-pencil-alt me-2"></i> Daftar Event
                         </a>
                         <a href="{{ route('kerjasama.event.index') }}" class="btn btn-outline-primary">
-                            <i class="fas fa-arrow-left me-2"></i>Kembali ke Daftar Event
+                            <i class="fas fa-arrow-left me-2"></i> Kembali ke Daftar Event
                         </a>
                     </div>
-
-                    <hr>
-
-                 
                 </div>
             </div>
         </div>
@@ -91,11 +100,31 @@
 </div>
 
 <style>
-.card {
-    border: none;
-    border-radius: 12px;
+/* ======== Struktur & Padding ======== */
+.container.event-detail {
+    margin-top: 50px !important;
+    margin-bottom: 80px;
+    max-width: 1200px;
 }
 
+/* ======== Breadcrumb ======== */
+.breadcrumb {
+    margin-bottom: 2rem;
+    background-color: transparent;
+    padding: 0;
+}
+
+.breadcrumb a {
+    color: #0041C2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* ======== Poster ======== */
 .event-poster-container {
     height: 400px;
     overflow: hidden;
@@ -113,39 +142,29 @@
 .no-poster {
     height: 400px;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #f8f9fa;
-    color: #6b7280;
+    flex-direction: column;
 }
 
-.no-poster i {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
+/* ======== Info Item ======== */
 .info-item {
     background-color: #f8f9fa;
-    padding: 1rem;
     border-radius: 8px;
+    padding: 12px 16px;
 }
 
-.info-item span {
-    font-size: 0.8rem;
-    color: #6b7280;
+.info-item i {
+    color: #0041C2;
 }
 
-.info-item p {
-    font-weight: 500;
-    color: #1a1a1a;
-}
-
+/* ======== Button ======== */
 .btn-primary {
     background-color: #0041C2;
     border: none;
-    padding: 10px;
     border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.2s ease;
 }
 
 .btn-primary:hover {
@@ -155,31 +174,14 @@
 .btn-outline-primary {
     border-color: #0041C2;
     color: #0041C2;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.2s ease;
 }
 
 .btn-outline-primary:hover {
     background-color: #0041C2;
     color: white;
-}
-
-.fas {
-    color: #0041C2;
-}
-
-.contact-info {
-    background-color: #f8f9fa;
-    padding: 1rem;
-    border-radius: 8px;
-}
-
-.contact-info h6 {
-    color: #1a1a1a;
-    font-weight: 600;
-}
-
-.contact-info p {
-    margin-bottom: 0.5rem;
-    color: #4b5563;
 }
 </style>
 @endsection
