@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="dashboard-container mt-5">
+<div class="dashboard-container" style="margin-top: 100px;">
     <div class="slider-container">
         <div class="slider">
             <div class="slide">
