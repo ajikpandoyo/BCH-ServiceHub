@@ -26,17 +26,17 @@
             <div class="row g-4 align-items-center">
                 <div class="col-md-4">
                     @if($event->poster)
-                        <div class="event-poster-container">
-                            <img src="{{ $event->poster_url }}" 
-                                 class="img-fluid rounded-3"
-                                 alt="{{ $event->nama_event }}"
-                                 onerror="this.onerror=null; this.src='{{ asset('images/default-event.jpg') }}';">
-                        </div>
+                    <div class="event-poster-container">
+                        <img src="{{ $event->poster_url }}"
+                            class="img-fluid rounded-3"
+                            alt="{{ $event->nama_event }}"
+                            onerror="this.onerror=null; this.src='{{ asset('images/default-event.jpg') }}';">
+                    </div>
                     @else
-                        <div class="no-poster">
-                            <i class="fas fa-image"></i>
-                            <span>Tidak ada poster</span>
-                        </div>
+                    <div class="no-poster">
+                        <i class="fas fa-image"></i>
+                        <span>Tidak ada poster</span>
+                    </div>
                     @endif
                 </div>
                 <div class="col-md-8">
@@ -120,136 +120,143 @@
 </div>
 
 <style>
-/* ===== Struktur & Padding ===== */
-.container.pendaftaran-event-index {
-    margin-top: 100px !important;
-    margin-bottom: 80px;
-    max-width: 1200px;
-}
+    /* ===== Struktur & Padding ===== */
+    .container.pendaftaran-event-index {
+        margin-top: 100px !important;
+        margin-bottom: 80px;
+        max-width: 1200px;
+    }
 
-/* ===== Breadcrumb ===== */
-.breadcrumb {
-    margin-bottom: 2rem;
-    background-color: transparent;
-    padding: 0;
-}
+    /* ===== Breadcrumb ===== */
+    .breadcrumb {
+        margin-bottom: 2rem;
+        background-color: transparent;
+        padding: 0;
+    }
 
-.breadcrumb a {
-    color: #0041C2;
-    text-decoration: none;
-    font-weight: 500;
-}
+    .breadcrumb a {
+        color: #0041C2;
+        text-decoration: none;
+        font-weight: 500;
+    }
 
-.breadcrumb a:hover {
-    text-decoration: underline;
-}
+    .breadcrumb a:hover {
+        text-decoration: underline;
+    }
 
-/* ===== Header ===== */
-.event-header h1 {
-    font-size: 32px;
-    color: #1a1a1a;
-    margin-bottom: 16px;
-}
+    /* ===== Header ===== */
+    .event-header h1 {
+        font-size: 32px;
+        color: #1a1a1a;
+        margin-bottom: 16px;
+    }
 
-.event-header p {
-    color: #666;
-    line-height: 1.6;
-}
+    .event-header p {
+        color: #666;
+        line-height: 1.6;
+    }
 
-/* ===== Poster ===== */
-.event-poster-container {
-    height: 220px;
-    overflow: hidden;
-    border-radius: 10px;
-    background-color: #f8f9fa;
-}
+    /* ===== Poster ===== */
+    .event-poster-container {
+        height: 220px;
+        overflow: hidden;
+        border-radius: 10px;
+        background-color: #f8f9fa;
+    }
 
-.event-poster-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+    .event-poster-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
-.no-poster {
-    height: 220px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    color: #6b7280;
-}
-.no-poster i {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-}
+    .no-poster {
+        height: 220px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        color: #6b7280;
+    }
 
-/* ===== Form & Card ===== */
-.card {
-    border-radius: 16px;
-    transition: all 0.3s ease;
-}
-.card:hover {
-    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-}
+    .no-poster i {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
 
-.form-label {
-    font-weight: 600;
-    color: #333;
-}
-.form-control {
-    padding: 0.75rem 1rem;
-    border-radius: 10px;
-    border: 1px solid #e0e0e0;
-    transition: all 0.2s ease;
-}
-.form-control:focus {
-    border-color: #0041C2;
-    box-shadow: 0 0 0 0.25rem rgba(0,65,194,0.15);
-}
+    /* ===== Form & Card ===== */
+    .card {
+        border-radius: 16px;
+        transition: all 0.3s ease;
+    }
 
-/* ===== Button ===== */
-.btn-primary {
-    background-color: #0041C2;
-    border: none;
-    transition: all 0.2s ease;
-}
-.btn-primary:hover {
-    background-color: #003399;
-    transform: translateY(-1px);
-}
-.btn-outline-secondary {
-    border: 1px solid #ccc;
-    transition: all 0.2s ease;
-}
-.btn-outline-secondary:hover {
-    background-color: #f1f1f1;
-}
+    .card:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    }
 
-/* ===== Judul Section ===== */
-h4.text-primary {
-    color: #0041C2 !important;
-    border-left: 4px solid #0041C2;
-    padding-left: 12px;
-}
+    .form-label {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .form-control {
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        transition: all 0.2s ease;
+    }
+
+    .form-control:focus {
+        border-color: #0041C2;
+        box-shadow: 0 0 0 0.25rem rgba(0, 65, 194, 0.15);
+    }
+
+    /* ===== Button ===== */
+    .btn-primary {
+        background-color: #0041C2;
+        border: none;
+        transition: all 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #003399;
+        transform: translateY(-1px);
+    }
+
+    .btn-outline-secondary {
+        border: 1px solid #ccc;
+        transition: all 0.2s ease;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* ===== Judul Section ===== */
+    h4.text-primary {
+        color: #0041C2 !important;
+        border-left: 4px solid #0041C2;
+        padding-left: 12px;
+    }
 </style>
 
 @push('scripts')
 <script>
-(function () {
-    'use strict'
-    var forms = document.querySelectorAll('.needs-validation')
-    Array.prototype.slice.call(forms).forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-            if (!form.checkValidity()) {
-                event.preventDefault()
-                event.stopPropagation()
-            }
-            form.classList.add('was-validated')
-        }, false)
-    })
-})()
+    (function() {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms).forEach(function(form) {
+            form.addEventListener('submit', function(event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
 </script>
 @endpush
 @endsection
